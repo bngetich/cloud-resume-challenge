@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brian Ngetich - Resume</title>
+    <script>
+        fetch("https://lzub5byorf.execute-api.us-east-2.amazonaws.com/Prod/hello")
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("replaceme").innerText = data.count
+            })
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <p>
+        Visitors: 
+        <span id="replaceme"></span>
+    </p>
+    <div class="container">
+        <div class="left_side">
+            <div class="profileText">
+                <div class="imgBx">
+                    <img src="img/img.png" alt="profile_img">
+                </div>
+                <h2>Brian Ngetich <br> <span>Software Developer</span></h2>
+            </div>
+            <div class="contactInfo">
+                <h3 class="title">Contact Info</h3>
+                <ul>
+                    <li>
+                        <span class="icon"><i class="uil uil-phone"></i></span>
+                        <span class="text">+1 240 971 8984</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="uil uil-envelope"></i></span>
+                        <span class="text">kimutaibryan@gmail.com</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="uil uil-globe"></i></span>
+                        <span class="text">www.example.com</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="uil uil-linkedin-alt"></i></span>
+                        <span class="text">www.linkedin.com/me</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="uil uil-map-marker"></i></span>
+                        <span class="text">San Francisco, CA</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contactInfo education">
+                <h3 class="title">Education</h3>
+                <ul>
+                    <li>
+                        <h5>2020 - 2023</h5>
+                        <h4>Masters Degree in Health Informatics</h4>
+                        <h4>The College Of St. Sholastica</h4>
+                    </li>
+                    <li>
+                        <h5>2011 - 2015</h5>
+                        <h4>Bachelr Degree in Informatics</h4>
+                        <h4>Moi University</h4>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contactInfo language">
+                <h3 class="title">Languages</h3>
+                <ul>
+                    <li>
+                        <span class="text">English</span>
+                        <span class="percent">
+                            <div style="width: 90%"></div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="text">Swahili</span>
+                        <span class="percent">
+                            <div style="width: 80%"></div>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="right_side">
+            <div class="about">
+                <h2 class="title2">Profile</h2>
+                <p>An ambitious software developer with close to two years of experience. While most of my work is in
+                    Java development and Angular, I have acquired enough skills to quickly learn new technologies to
+                    apply to full-stack web and cloud development.</p>
+            </div>
+
+            <div class="about">
+                <h2 class="title2">Experience</h2>
+                <div class="box">
+                    <div class="year_company">
+                        <h5>2016 - 2017</h5>
+                        <h5>USAID-AMPATH</h5>
+                    </div>
+                    <div class="text">
+                        <h4>Software Developer</h4>
+                        <p>Worked on new features for Point of Care (POC) System developed in Angular on frontend and
+                            NodeJS on backend.</p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="year_company">
+                        <h5>2015 - 2015</h5>
+                        <h5>Walter Reed Project</h5>
+                    </div>
+                    <div class="text">
+                        <h4>Tech Support Intern</h4>
+                        <p>Managed setting up of new laptops and workstations, installation of Microsoft Windows, adding
+                            of new computers, printers and scanners to the company domain and updating operating systems
+                            with current windows updates. </p>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="year_company">
+                        <h5>2013 - 2013</h5>
+                        <h5>USAID-AMPATH</h5>
+                    </div>
+                    <div class="text">
+                        <h4>Information Technology Intern</h4>
+                        <p>TroubleShooted hardware and software problems on about 100 company laptops running on Windows
+                            OS. Also assisted in the data entry of patient records to openMRS Electronic Medical Record
+                            system.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about skills">
+                <h2 class="title2">Professional skills</h2>
+                <div class="box">
+                    <h4>OOP</h4>
+                    <div class="percent">
+                        <div style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>Java</h4>
+                    <div class="percent">
+                        <div style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>Spring Boot</h4>
+                    <div class="percent">
+                        <div style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>MYSQL</h4>
+                    <div class="percent">
+                        <div style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>AWS</h4>
+                    <div class="percent">
+                        <div style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>Python</h4>
+                    <div class="percent">
+                        <div style="width: 60%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>TypeScript</h4>
+                    <div class="percent">
+                        <div style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>Angular</h4>
+                    <div class="percent">
+                        <div style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>Git</h4>
+                    <div class="percent">
+                        <div style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>CSS</h4>
+                    <div class="percent">
+                        <div style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>HTML</h4>
+                    <div class="percent">
+                        <div style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>JavaScript</h4>
+                    <div class="percent">
+                        <div style="width: 70%"></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <h4>Agile</h4>
+                    <div class="percent">
+                        <div style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about interest">
+                <h2 class="title2">Interest</h2>
+                <ul>
+                    <li>
+                        <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
+                        <span class="text">Hiking</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-futbol-o" aria-hidden="true"></i></span>
+                        <span class="text">Soccer</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
+                        <span class="text">Gaming</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
