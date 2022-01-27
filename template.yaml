@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   cloud-resume-challenge
@@ -10,6 +10,22 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  HostedZoneParameter:
+    Type: String
+    Description: The hosted zone for the Route53 records
+  DomainNameParameter:
+    Type: String
+    Description: The domain name of the site
+  ApiDomainNameParameter:
+    Type: String
+    Description: The subdomain of the API
+    Default: "api."
+  WebsiteDomainNameParameter:
+    Type: String
+    Description: The subdomain of the API
+    Default: "website."
+
 Resources:
   GetFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -18,12 +34,14 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.6
       Events:
-        GET:
+        CatchAll:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /get
-            Method: get
-      Policies: 
+            Method: GET
+            RestApiId:
+              Ref: ApiGatewayApi
+      Policies:
         - DynamoDBCrudPolicy:
             TableName: countertable
 
@@ -34,20 +52,34 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.6
       Events:
-        PUT:
+        CatchAll:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /put
-            Method: get
-      Policies: 
-      - DynamoDBCrudPolicy:
-          TableName: countertable
+            Method: GET
+            RestApiId:
+              Ref: ApiGatewayApi
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: countertable
     
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Domain:
+        DomainName:
+          !Join ["", [!Ref ApiDomainNameParameter, !Ref DomainNameParameter]]
+        CertificateArn: !Ref MyCertificate
+        Route53:
+          HostedZoneId:
+            Ref: HostedZoneParameter
+
   MyWebsite:
     Type: AWS::S3::Bucket
-    Properties: 
+    Properties:
       AccessControl: PublicRead
-      WebsiteConfiguration: 
+      WebsiteConfiguration:
         IndexDocument: index.html
       BucketName: my-fantastic-website-kimu
 
@@ -66,18 +98,25 @@ Resources:
   MyRoute53Record:
     Type: "AWS::Route53::RecordSetGroup"
     Properties:
-      HostedZoneId: Z0191064EIJRQZ2C9PCI 
+      HostedZoneId: Z0191064EIJRQZ2C9PCI
       RecordSets:
-        - Name: www.bngetich.com 
+        - Name: www.bngetich.com
           Type: A
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2
-            DNSName: !GetAtt MyDistribution.DomainName 
+            DNSName: !GetAtt MyDistribution.DomainName
 
   MyCertificate:
     Type: AWS::CertificateManager::Certificate
     Properties:
-      DomainName: www.bngetich.com
+      DomainName: !Join ["", ["*.", !Ref DomainNameParameter]]
+      SubjectAlternativeNames:
+        - !Ref DomainNameParameter
+        - !Join ["", ["*.", !Ref DomainNameParameter]]
+      DomainValidationOptions:
+        - DomainName: !Ref DomainNameParameter
+          HostedZoneId:
+            Ref: HostedZoneParameter
       ValidationMethod: DNS
 
   MyDistribution:
@@ -91,7 +130,7 @@ Resources:
           - "www.bngetich.com"
         DefaultCacheBehavior:
           ViewerProtocolPolicy: allow-all
-          TargetOriginId:  my-fantastic-website-kimu.s3-website.us-east-2.amazonaws.com
+          TargetOriginId: my-fantastic-website-kimu.s3-website.us-east-2.amazonaws.com
           DefaultTTL: 0
           MinTTL: 0
           MaxTTL: 0
@@ -110,26 +149,13 @@ Resources:
     Properties:
       PolicyDocument:
         Id: MyPolicy
-        Version: 2012-10-17 
+        Version: 2012-10-17
         Statement:
-        - Sid: PublicReadForGetBucketObjects 
-          Effect: Allow
-          Action: 's3:GetObject'
-          Principal: "*"
-          Resource:  
-            - !Sub "arn:aws:s3:::${MyWebsite}/*"
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Action: "s3:GetObject"
+            Principal: "*"
+            Resource:
+              - !Sub "arn:aws:s3:::${MyWebsite}/*"
       Bucket: !Ref MyWebsite
 
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  GetApi:
-    Description: "API Gateway endpoint URL for Prod stage for Get function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get/"
-  GetFunction:
-    Description: "Get Lambda Function ARN"
-    Value: !GetAtt GetFunction.Arn
-  GetFunctionIamRole:
-    Description: "Implicit IAM Role created for Get function"
-    Value: !GetAtt GetFunction.Arn

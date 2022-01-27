@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brian Ngetich - Resume</title>
     <script>
-        fetch("https://lzub5byorf.execute-api.us-east-2.amazonaws.com/Prod/put")
-            .then(() => fetch('https://lzub5byorf.execute-api.us-east-2.amazonaws.com/Prod/get'))
+        fetch("https://api.bngetich.com/put")
+            .then(() => fetch('https://api.bngetich.com/get'))
             .then(response => response.json())
             .then((data) => {
                 document.getElementById("replaceme").innerText = data.count
